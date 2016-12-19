@@ -74,5 +74,15 @@
 			(recur prev result sum (inc counter))))))
 
 (defn cut-at-repetition [a-seq]
-  [":("])
+  (loop [ my-seq a-seq
+         coll []
+         set-vals #{} ]
+    (if (empty? my-seq) 
+      coll
+      (do
+        (if (contains? set-vals (first my-seq))
+          coll
+          (recur (rest my-seq) 
+                 (conj coll (first my-seq))
+                 (conj set-vals (first my-seq))))))))
 
